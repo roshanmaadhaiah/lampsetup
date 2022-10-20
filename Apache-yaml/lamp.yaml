@@ -35,8 +35,8 @@
           src: "{{ item.confsrc }}"
           dest: "{{ item.confdest }}"
         with_items: 
-          - { confsrc: '/home/cloudstack/Apache-yaml/etc/apache2/sites-available/000-default.conf', confdest: '/etc/apache2/sites-available/'}
-          - { confsrc: '/home/cloudstack/Apache-yaml/var/www/html/index.html', confdest: '/var/www/html/'}
+          - { confsrc: '/usr/local/src/lampsetup-main/Apache-yaml/etc/apache2/sites-available/000-default.conf', confdest: '/etc/apache2/sites-available/'}
+          - { confsrc: '/usr/local/src/lampsetup-main/Apache-yaml/var/www/html/index.html', confdest: '/var/www/html/'}
 
       - name: Starting service apache2
         service:
