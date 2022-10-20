@@ -1,7 +1,5 @@
 - name: Lamp Setup
-  hosts: testvm
-  become: yes
-  become_method: sudo
+  hosts: localhost
   tasks:
       - shell: "{{ item }}"
         with_items:
