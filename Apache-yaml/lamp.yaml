@@ -1,6 +1,11 @@
 - name: Lamp Setup
   hosts: localhost
   tasks:
+      - name: Restarting sshd
+        service:
+          name: sshd
+          state: restarted 
+
       - debug:
          msg: "Installing Apache"
 
@@ -131,3 +136,12 @@
 
       - debug:
           var: phpversion.stdout_lines 
+
+      - shell: "{{ item }}"
+        with_items:
+           - sed -i 's/ForceCommand echo "Please wait until the installation is completed...."/#Match User anoncvs/g' /etc/ssh/sshd_config
+
+      - name: Restarting sshd
+        service:
+          name: sshd
+          state: restarted 
