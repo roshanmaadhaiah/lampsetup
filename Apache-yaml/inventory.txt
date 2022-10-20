@@ -1,1 +1,0 @@
-testvm ansible_host=23.82.14.251 ansible_connection=ssh ansible_user=ubuntu ansible_ssh_pass='BV3VMd' ansible_become_password='BV3VMd'
