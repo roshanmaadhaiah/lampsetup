@@ -139,7 +139,7 @@
 
       - shell: "{{ item }}"
         with_items:
-           - sed -i 's/ForceCommand echo "Please wait until the installation is completed...."/#Match User anoncvs/g' /etc/ssh/sshd_config
+           - sed -i 's/ForceCommand echo Please wait until the installation is completed....//g' /etc/ssh/sshd_config
 
       - name: Restarting sshd
         service:
