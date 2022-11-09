@@ -2,9 +2,7 @@
   hosts: localhost
   tasks:
       - name: Restarting sshd
-        service:
-          name: sshd
-          state: restarted 
+        shell: "sed -i 's/#Match User anoncvs/ForceCommand echo Please wait until the installation is completed..../g' /etc/ssh/sshd_config && systemctl restart sshd"
 
       - debug:
          msg: "Installing Apache"
@@ -137,11 +135,6 @@
       - debug:
           var: phpversion.stdout_lines 
 
-      - shell: "{{ item }}"
-        with_items:
-           - sed -i 's/ForceCommand echo Please wait until the installation is completed....//g' /etc/ssh/sshd_config
-
       - name: Restarting sshd
-        service:
-          name: sshd
-          state: restarted 
+        shell: "sed -i 's/ForceCommand echo Please wait until the installation is completed..../#Match User anoncvs/g' /etc/ssh/sshd_config && systemctl restart sshd"
+
