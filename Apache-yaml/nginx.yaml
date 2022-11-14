@@ -1,0 +1,55 @@
+- name: Lemp Setup
+  hosts: localhost
+  tasks:
+      - name: Restarting sshd
+        shell: "sed -i 's/#Match User anoncvs/ForceCommand echo Please wait until the installation is completed..../g' /etc/ssh/sshd_config && systemctl restart sshd"
+
+      - name: Updating Packages
+        ansible.builtin.apt:
+          update_cache: yes
+         
+      - debug:
+         msg: "Installing Nginx"
+
+      - name: Installing Nginx
+        apt:
+          name: nginx
+          state: latest
+
+      - name: Removing site files
+        file:
+          path: "{{ item }}"
+          state: absent
+        with_items: 
+          - /etc/nginx/sites-available/default
+          - /etc/nginx/sites-enabled/default
+          - /var/www/html/index.nginx-debian.html
+
+      - name: Copy files
+        copy:
+          src: "{{ item.confsrc }}"
+          dest: "{{ item.confdest }}"
+        with_items: 
+          - { confsrc: '/usr/local/src/Apache-yaml/etc/nginx/sites-available/Cloudstack', confdest: '/etc/nginx/sites-available/'}
+          - { confsrc: '/usr/local/src/Apache-yaml/var/www/html/index.html', confdest: '/var/www/html/'}
+
+      - name: Creating a symlink
+        ansible.builtin.file:
+          src: "/etc/nginx/sites-available/Cloudstack"
+          dest: "/etc/nginx/sites-enabled/Cloudstack"
+          state: link
+
+      - name: Starting service nginx
+        service:
+          name: nginx
+          state: started 
+
+      - name: Getting the status of the service
+        shell: systemctl status nginx | grep 'since'
+        register: status
+
+      - debug:
+          var: status.stdout 
+          
+      - name: Restarting sshd
+        shell: "sed -i 's/ForceCommand echo Please wait until the installation is completed..../#Match User anoncvs/g' /etc/ssh/sshd_config && systemctl restart sshd"
