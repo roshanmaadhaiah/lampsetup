@@ -11,10 +11,6 @@
       - debug:
          msg: "Installing Apache"
 
-      - name: update
-        apt: 
-          update_cache: yes   
-
       - name: Installing apache
         apt:
           name: apache2
