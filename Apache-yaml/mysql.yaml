@@ -1,4 +1,4 @@
-- name: Lamp Setup
+- name: MySQL Setup
   hosts: localhost
   tasks:
       - name: Restarting sshd
