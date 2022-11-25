@@ -224,9 +224,11 @@
                     -e "s|max_execution_time.*|max_execution_time = 60|g" \
                     -i /etc/php/8.1/apache2/php.ini'
 
-      - name: Enable re-write
-        shell: 'cd /etc/apache2/mods-enabled/ &&
-                ln -vs ../mods-available/rewrite.load .'
+      - name: Enable re-write & Configure symlink
+        shell: "{{ item }}"
+        with_items:
+           - 'cd /etc/apache2/sites-enabled/ && ln -vs ../sites-available/001-default.conf .'
+           - 'cd /etc/apache2/mods-enabled/ && ln -vs ../mods-available/rewrite.load .'
 
       - name: Restarting sshd
         shell: "sed -i 's/ForceCommand echo Please wait until the installation is completed..../#Match User anoncvs/g' /etc/ssh/sshd_config && systemctl restart sshd"
