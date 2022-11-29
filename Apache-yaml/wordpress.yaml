@@ -205,6 +205,12 @@
         with_items:
           - 'rsync -zavh /usr/local/src/wordpress/. /var/www/html/.'
 
+      - name: Copy a wordpress configuration file
+        ansible.builtin.copy:
+          src: /var/www/html/wp-config-sample.php
+          dest: /var/www/html/wp-config.php
+          remote_src: yes
+          
       - name: Change ownership of a directory
         ansible.builtin.file:
           path: /var/www/html/
