@@ -111,8 +111,8 @@
       - debug:
           msg: "Mysql root password is stored under /root/.mysql_root_password"
 
-      # - name: Change login type
-      #   shell: 'mysql -u root -p{{ rootpassword.stdout }} -n --execute="ALTER USER 'root'@'localhost' IDENTIFIED WITH auth_socket;" > /dev/null 2>&1'
+      - name: Change login type
+        shell: 'mysql -u root -p{{ rootpassword.stdout }} -n --execute="ALTER USER 'root'@'localhost' IDENTIFIED WITH auth_socket;" > /dev/null 2>&1'
 
       - debug:
          msg: "Installing PHP"
