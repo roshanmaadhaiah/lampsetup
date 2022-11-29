@@ -212,6 +212,21 @@
           dest: /var/www/html/wp-config.php
           remote_src: yes
           
+      - name: Generating wordpress password
+        shell: openssl rand -hex 24
+        register: wordpresspassword
+
+      - debug:
+         var: wordpresspassword.stdout
+
+      - name: Storing wordpress password
+        copy:
+          dest: "/root/.wordpress_database_details"
+          content: |
+            wordpress_database_name = wordpress_db          
+            wordpress_database_user = wordpress_user
+            wordpress_user_password="{{ wordpresspassword.stdout }}"
+          
       - name: Creating Wordpress configurations
         shell: "{{ item }}"
         with_items:
