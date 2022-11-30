@@ -32,7 +32,7 @@
         with_items: 
           - { confsrc: '/usr/local/src/Apache-yaml/etc/apache2/sites-available/001-default.conf', confdest: '/etc/apache2/sites-available/'}
           - { confsrc: '/usr/local/src/Apache-yaml/var/www/html/index.html', confdest: '/var/www/html/'}
-          - { confsrc: '/usr/local/src/Apache-yaml/etc/apache2/conf-enabled/block-xmlrpc.conf', confdest: '/etc/apache2/conf-enabled/'}
+          - { confsrc: '/usr/local/src/Apache-yaml/etc/apache2/conf-available/block-xmlrpc.conf', confdest: '/etc/apache2/conf-available/'}
 
       - name: Starting service apache2
         service:
