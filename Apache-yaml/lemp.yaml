@@ -13,7 +13,7 @@
 
       - name: Installing Nginx
         apt:
-          name: nginx
+          name: [ 'nginx' , 'fail2ban' ]
           state: latest
 
       - name: Removing site files
