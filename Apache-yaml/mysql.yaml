@@ -13,7 +13,7 @@
 
       - name: Installing apache
         apt:
-          name: apache2
+          name: [ 'apache2' , 'python3-certbot-apache' ]
           state: latest
 
       - name: Removing site files
