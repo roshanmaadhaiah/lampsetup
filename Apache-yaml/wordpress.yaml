@@ -262,6 +262,11 @@
         with_items:
            - 'cd /etc/apache2/sites-enabled/ && ln -vs ../sites-available/001-default.conf .'
            - 'cd /etc/apache2/mods-enabled/ && ln -vs ../mods-available/rewrite.load .'
+           
+      - name: Creating a directory for shell script
+        ansible.builtin.file:
+          path: /opt/cloudstack
+          state: directory                   
 
       - name: Adding a line for shell script
         lineinfile:
