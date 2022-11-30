@@ -13,7 +13,7 @@
 
       - name: Installing Nginx
         apt:
-          name: [ 'nginx' , 'fail2ban' ]
+          name: [ 'nginx' , 'fail2ban' , 'python3-certbot-nginx' ]
           state: latest
 
       - name: Removing site files
