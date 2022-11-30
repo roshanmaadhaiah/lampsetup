@@ -13,7 +13,7 @@
 
       - name: Installing apache
         apt:
-          name: apache2
+          name: [ 'apache2' , 'fail2ban' ]
           state: latest
 
       - name: Removing site files
