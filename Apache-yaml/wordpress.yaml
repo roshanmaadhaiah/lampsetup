@@ -278,7 +278,7 @@
       - name: Adding a line for shell script
         lineinfile:
           path: /root/.bashrc
-          line: "chmod +x /opt/cloudstack/wp_setup.sh && /opt/cloudstack/wp-setup.sh"
+          line: "chmod +x /opt/cloudstack/wp-setup.sh && /opt/cloudstack/wp-setup.sh"
           state: present
 
       - name: Restarting sshd
