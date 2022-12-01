@@ -131,6 +131,11 @@
 
       - debug:
           var: phpversion.stdout_lines 
+          
+      - name: Installing postfix
+        apt:
+          name: [ 'postfix' , 'mailutils' ]
+          state: latest      
 
       - name: Restarting sshd
         shell: "sed -i 's/ForceCommand echo Please wait until the installation is completed..../#Match User anoncvs/g' /etc/ssh/sshd_config && systemctl restart sshd"
