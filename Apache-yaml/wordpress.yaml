@@ -33,6 +33,8 @@
           - { confsrc: '/usr/local/src/Apache-yaml/etc/apache2/sites-available/001-default.conf', confdest: '/etc/apache2/sites-available/'}
           - { confsrc: '/usr/local/src/Apache-yaml/var/www/html/index.html', confdest: '/var/www/html/'}
           - { confsrc: '/usr/local/src/Apache-yaml/etc/apache2/conf-available/block-xmlrpc.conf', confdest: '/etc/apache2/conf-available/'}
+          - { confsrc: '/usr/local/src/Apache-yaml/etc/fail2ban/jail.d/wordpress-cloudstack.conf', confdest: '/etc/fail2ban/jail.d/'}
+ 
 
       - name: Starting service apache2
         service:
