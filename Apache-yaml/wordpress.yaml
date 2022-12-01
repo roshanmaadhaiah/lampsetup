@@ -247,6 +247,15 @@
           recurse: yes
           owner: www-data
           group: www-data
+          
+      - name: Download fail2ban files
+        ansible.builtin.unarchive:
+          src: https://downloads.wordpress.org/plugin/wp-fail2ban.4.4.0.4.zip
+          dest: /usr/local/src/
+          remote_src: yes
+
+      - name: Copy fil2ban files
+        shell: 'cp -auv /usr/local/src/wp-fail2ban/filters.d/* /etc/fail2ban/filter.d/'         
 
       - name: Installing php extensions
         apt:
