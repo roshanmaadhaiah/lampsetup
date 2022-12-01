@@ -274,6 +274,11 @@
            - 'cd /etc/apache2/sites-enabled/ && ln -vs ../sites-available/001-default.conf .'
            - 'cd /etc/apache2/mods-enabled/ && ln -vs ../mods-available/rewrite.load .'
            
+      - name: Installing postfix
+        apt:
+          name: [ 'postfix' , 'mailutils' ]
+          state: latest          
+           
       - name: Creating a directory for shell script
         ansible.builtin.file:
           path: /opt/cloudstack
