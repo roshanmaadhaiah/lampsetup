@@ -258,7 +258,6 @@
         shell: "{{ item }}"
         with_items:
            - 'cd /etc/apache2/sites-enabled/ && ln -vs ../sites-available/001-default.conf .'
-           - 'cd /etc/apache2/mods-enabled/ && ln -vs ../mods-available/rewrite.load .'
            
       - name: Installing postfix
         apt:
