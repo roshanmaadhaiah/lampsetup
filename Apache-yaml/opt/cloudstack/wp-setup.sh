@@ -36,7 +36,7 @@ do
   a=1
 fi
 done
-sed -i "s/\$domain/$dom/g"  /etc/apache2/sites-enabled/001-default.conf
+sed -i "s/\$domain/$dom/g"  /etc/apache2/sites-available/001-default.conf
 a2enconf block-xmlrpc >/dev/null 2>&1
 systemctl restart apache2
 rm -rf /root/.bashrc
