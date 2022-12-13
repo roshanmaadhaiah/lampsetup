@@ -1,4 +1,4 @@
-- name: Wordpress Setup
+- name: Joomla Setup
   hosts: localhost
   tasks:
       - name: Restarting sshd
@@ -13,7 +13,7 @@
 
       - name: Installing apache
         apt:
-          name: [ 'apache2' , 'fail2ban' , 'python3-certbot-apache' , 'zip' , 'unzip' ]
+          name: [ 'apache2' , 'python3-certbot-apache' , 'zip' , 'unzip' ]
           state: latest
 
       - name: Removing site files
@@ -31,10 +31,7 @@
           dest: "{{ item.confdest }}"
         with_items: 
           - { confsrc: '/usr/local/src/Apache-yaml/etc/apache2/sites-available/001-default.conf', confdest: '/etc/apache2/sites-available/'}
-          - { confsrc: '/usr/local/src/Apache-yaml/var/www/html/index.html', confdest: '/var/www/html/'}
-          - { confsrc: '/usr/local/src/Apache-yaml/etc/apache2/conf-available/block-xmlrpc.conf', confdest: '/etc/apache2/conf-available/'}
-          - { confsrc: '/usr/local/src/Apache-yaml/etc/fail2ban/jail.d/wordpress-cloudstack.conf', confdest: '/etc/fail2ban/jail.d/'}
- 
+          - { confsrc: '/usr/local/src/Apache-yaml/var/www/html/index.html', confdest: '/var/www/html/'} 
 
       - name: Starting service apache2
         service:
@@ -198,7 +195,7 @@
            name: apache2
            state: restarted 
 
-      - name: Download Wordpress files
+      - name: Download Joomla files
         ansible.builtin.unarchive:
           src: https://wordpress.org/wordpress-6.0.tar.gz
           dest: /usr/local/src/
