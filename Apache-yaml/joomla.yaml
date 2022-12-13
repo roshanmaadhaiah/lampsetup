@@ -212,29 +212,23 @@
         shell: "{{ item }}"
         with_items:
           - 'rsync -zavh /usr/local/src/. /var/www/html/.'
-
-      - name: Copy a wordpress configuration file
-        ansible.builtin.copy:
-          src: /var/www/html/wp-config-sample.php
-          dest: /var/www/html/wp-config.php
-          remote_src: yes
-          
+       
       - name: Generating wordpress password
         shell: openssl rand -hex 24
-        register: wordpresspassword
+        register: joomlapassword
 
       - debug:
-         var: wordpresspassword.stdout
+         var: joomlapassword.stdout
 
-      - name: Storing wordpress password
+      - name: Storing joomla password
         copy:
-          dest: "/root/.wordpress_database_details"
+          dest: "/root/.joomla_database_details"
           content: |
-            wordpress_database_name = wordpress_db          
-            wordpress_database_user = wordpress_user
-            wordpress_user_password="{{ wordpresspassword.stdout }}"
+            joomla_database_name = joomla_db          
+            joomla_database_user = joomla_user
+            joomla_user_password="{{ joomlapassword.stdout }}"
           
-      - name: Creating Wordpress configurations
+      - name: Creating joomla configurations
         shell: "{{ item }}"
         with_items:
           - mysql -e 'create database joomla_db' -u root -p{{ rootpassword.stdout }}
