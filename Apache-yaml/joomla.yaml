@@ -197,14 +197,14 @@
 
       - name: Download Joomla files
         ansible.builtin.unarchive:
-          src: https://wordpress.org/wordpress-6.0.tar.gz
+          src: https://downloads.joomla.org/cms/joomla4/4-2-5/Joomla_4.2.5-Stable-Full_Package.tar.gz
           dest: /usr/local/src/
           remote_src: yes
 
       - name: Rename a Existing folder & Move the latest Files
         shell: "{{ item }}"
         with_items:
-          - 'rsync -zavh /usr/local/src/wordpress/. /var/www/html/.'
+          - 'rsync -zavh /usr/local/src/. /var/www/html/.'
 
       - name: Copy a wordpress configuration file
         ansible.builtin.copy:
