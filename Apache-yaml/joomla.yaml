@@ -274,12 +274,12 @@
           src: "{{ item.confsrc }}"
           dest: "{{ item.confdest }}"
         with_items: 
-          - { confsrc: '/usr/local/src/Apache-yaml/opt/cloudstack/wp-setup.sh', confdest: '/opt/cloudstack/'}     
+          - { confsrc: '/usr/local/src/Apache-yaml/opt/cloudstack/joomla-setup.sh', confdest: '/opt/cloudstack/'}     
 
       - name: Adding a line for shell script
         lineinfile:
           path: /root/.bashrc
-          line: "chmod +x /opt/cloudstack/wp-setup.sh && /opt/cloudstack/wp-setup.sh"
+          line: "chmod +x /opt/cloudstack/joomla-setup.sh && /opt/cloudstack/joomla-setup.sh"
           state: present
          
       - name: Restarting sshd
