@@ -201,6 +201,13 @@
           dest: /usr/local/src/
           remote_src: yes
 
+      - name: Removing site files
+        file:
+          path: "{{ item }}"
+          state: absent
+        with_items: 
+          - /usr/local/src/Joomla_4.2.5-Stable-Full_Package.tar.gz
+
       - name: Rename a Existing folder & Move the latest Files
         shell: "{{ item }}"
         with_items:
