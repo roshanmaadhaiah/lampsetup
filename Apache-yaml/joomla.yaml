@@ -120,12 +120,12 @@
       - name: Installation install software-properties-common
         apt: name=software-properties-common
       
-      - name: "Repo PHP"
+      - name: "Repo PHP 8.1"
         apt_repository:
           repo="ppa:ondrej/php"
     
-      - name: Installation PHP
-        apt: name=php state=present
+      - name: Installation PHP 8.1
+        apt: name=php8.1 state=present
 
       - shell: php -v
         register: phpversion
@@ -195,8 +195,10 @@
            name: apache2
            state: restarted 
 
-      - name: Creating a directory
-        shell: mkdir -p /usr/local/src/joomla/
+      - name: Creates directory for joomla
+        file:
+          path: /usr/local/src/joomla/
+          state: directory
         
       - name: Download Joomla files
         ansible.builtin.unarchive:
