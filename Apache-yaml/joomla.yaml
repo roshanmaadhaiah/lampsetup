@@ -246,11 +246,11 @@
           name: php8.1-mysql
           state: present
 
-      - name: Tweaking php settings
-        shell: 'sed -e "s|upload_max_filesize.*|upload_max_filesize = 32M|g" \
-                    -e "s|post_max_size.*|post_max_size = 32M|g" \
-                    -e "s|max_execution_time.*|max_execution_time = 60|g" \
-                    -i /etc/php/8.1/apache2/php.ini'
+#       - name: Tweaking php settings
+#         shell: 'sed -e "s|upload_max_filesize.*|upload_max_filesize = 32M|g" \
+#                     -e "s|post_max_size.*|post_max_size = 32M|g" \
+#                     -e "s|max_execution_time.*|max_execution_time = 60|g" \
+#                     -i /etc/php/8.1/apache2/php.ini'
 
       - name: Enable re-write & Configure symlink
         shell: "{{ item }}"
