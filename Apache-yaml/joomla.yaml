@@ -120,12 +120,12 @@
       - name: Installation install software-properties-common
         apt: name=software-properties-common
       
-      - name: "Repo PHP 8.1"
+      - name: "Repo PHP"
         apt_repository:
           repo="ppa:ondrej/php"
     
-      - name: Installation PHP 8.1
-        apt: name=php8.1 state=present
+      - name: Installation PHP
+        apt: name=php state=present
 
       - shell: php -v
         register: phpversion
@@ -195,23 +195,19 @@
            name: apache2
            state: restarted 
 
+      - name: Creating a directory
+        shell: mkdir -p /usr/local/src/joomla/
+        
       - name: Download Joomla files
         ansible.builtin.unarchive:
           src: https://downloads.joomla.org/cms/joomla4/4-2-2/Joomla_4.2.2-Stable-Full_Package.tar.gz
-          dest: /usr/local/src/
+          dest: /usr/local/src/joomla/
           remote_src: yes
-
-      - name: Removing site files
-        file:
-          path: "{{ item }}"
-          state: absent
-        with_items: 
-          - /usr/local/src/Joomla_4.2.5-Stable-Full_Package.tar.gz
-
+         
       - name: Rename a Existing folder & Move the latest Files
         shell: "{{ item }}"
         with_items:
-          - 'rsync -zavh /usr/local/src/. /var/www/html/.'
+          - 'rsync -zavh /usr/local/src/joomla/. /var/www/html/.'
        
       - name: Generating joomla password
         shell: openssl rand -hex 24
