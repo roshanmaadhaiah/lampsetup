@@ -241,7 +241,7 @@
           
       - name: Installing php extensions
         apt:
-          name: php8.1-mysql
+          name: php-mysql
           state: present
 
       - name: Tweaking php settings
