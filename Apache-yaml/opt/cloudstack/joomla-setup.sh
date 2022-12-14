@@ -1,8 +1,13 @@
 #!/bin/bash
 
-echo "Use the Below Database Credentials to setup Joomla"
+RED='\033[0;31m'
+NC='\033[0m'
+
+echo
+echo -e "${RED}Use the Below Database Credentials to setup Joomla${NC}"
 echo
 cat /root/.joomla_database_details
+echo
 
 #Cleanup script
 rm -rf /usr/local/src/
