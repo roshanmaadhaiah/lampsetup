@@ -1,3 +1,9 @@
+#!/bin/bash
+
+echo "Use the Below Database Credentials to setup Joomla"
+echo
+cat /root/.joomla_database_details
+
 #Cleanup script
 rm -rf /usr/local/src/
 mkdir -p /usr/local/src/
