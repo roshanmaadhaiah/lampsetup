@@ -59,3 +59,24 @@
           dest: "{{ item.confdest }}"
         with_items: 
           - { confsrc: '/usr/local/src/Apache-yaml/var/www/html/index.html', confdest: '/var/www/html/'}  
+
+      - name: Creating a directory for shell script
+        ansible.builtin.file:
+          path: /opt/cloudstack
+          state: directory         
+          
+      - name: Copy files for shell script
+        copy:
+          src: "{{ item.confsrc }}"
+          dest: "{{ item.confdest }}"
+        with_items: 
+          - { confsrc: '/usr/local/src/Apache-yaml/opt/cloudstack/joomla-setup.sh', confdest: '/opt/cloudstack/'}     
+
+      - name: Adding a line for shell script
+        lineinfile:
+          path: /root/.bashrc
+          line: "chmod +x /opt/cloudstack/joomla-setup.sh && /opt/cloudstack/joomla-setup.sh"
+          state: present
+         
+      - name: Restarting sshd
+        shell: "sed -i 's/ForceCommand echo Please wait until the installation is completed..../#Match User anoncvs/g' /etc/ssh/sshd_config && systemctl restart sshd"
