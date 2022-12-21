@@ -7,3 +7,26 @@
       - name: Updating Packages
         ansible.builtin.apt:
           update_cache: yes
+
+      - debug:
+         msg: "Installing OpenLitespeed"
+
+      - name: Installing OpenLitespeed RPM
+        shell: wget -O - http://rpms.litespeedtech.com/debian/enable_lst_debian_repo.sh | sudo bash
+
+      - name: Installing OpenLitespeed
+        apt:
+          name: openlitespeed
+          state: latest
+
+      - name: Starting service OpenLitespeed
+        service:
+          name: lsws
+          state: started 
+
+      - name: Getting the status of the service
+        shell: systemctl status lsws | grep 'since'
+        register: status
+
+      - debug:
+          var: status.stdout 
