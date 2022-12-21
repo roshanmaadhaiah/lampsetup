@@ -30,3 +30,25 @@
 
       - debug:
           var: status.stdout 
+
+      - name: Creating a directory for OpenLitespeed
+        ansible.builtin.file:
+          path: "{{ item }}"
+          state: directory     
+          recurse: yes
+        with_items:
+            - /var/www/html
+            - /usr/local/lsws/conf/vhosts/joomla
+
+      - name: Creating a Virtualhost file for OpenLitespeed
+        ansible.builtin.file:
+          path: /usr/local/lsws/conf/vhosts/joomla/vhconf.conf
+          state: touch     
+
+      - name: Change ownership of a directory
+        ansible.builtin.file:
+          path: /usr/local/lsws/conf/vhosts/joomla
+          state: directory
+          recurse: yes
+          owner: lsadm
+          group: nogroup
