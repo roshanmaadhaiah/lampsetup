@@ -53,7 +53,7 @@
           owner: lsadm
           group: nogroup
           
-      - name: Copy files
+      - name: Copying index.html file
         copy:
           src: "{{ item.confsrc }}"
           dest: "{{ item.confdest }}"
