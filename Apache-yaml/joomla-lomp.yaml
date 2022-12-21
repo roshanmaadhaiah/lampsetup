@@ -132,6 +132,26 @@
 
       - debug:
           msg: "Mariadb root password is stored under /root/.mariadb_root_password"   
+          
+      - debug:
+         msg: "Installing PHP"
+
+      - name: Checking lsphp supported by OpenLitespeed
+        shell: apt-cache search lsphp | awk '{print $1}' | cut -d "-" -f 1 | tail -n1
+        register: phpoutput
+
+      - debug:
+          var: phpoutput.stdout
+      
+      - name: Installation PHP "{{ phpoutput.stdout }}"
+        apt: 
+          name: [ '{{ phpoutput.stdout }}', '{{ phpoutput.stdout }}-mysql', '{{ phpoutput.stdout }}-common', '{{ phpoutput.stdout }}-opcache', '{{ phpoutput.stdout }}-curl' ] 
+          state: present
+
+      - name: Restarting OpenLitespeed
+        service:
+           name: lsws
+           state: restarted 
 
       - name: Creating a directory for shell script
         ansible.builtin.file:
