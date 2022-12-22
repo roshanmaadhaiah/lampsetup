@@ -141,7 +141,7 @@
           name: [ 'lsphp80', 'lsphp80-mysql', 'lsphp80-common', 'lsphp80-opcache', 'lsphp80-curl' ] 
           state: present
 
-       - name: Creating a directory for shell script
+      - name: Creating a directory for shell script
         ansible.builtin.file:
           path: /opt/cloudstack
           state: directory         
