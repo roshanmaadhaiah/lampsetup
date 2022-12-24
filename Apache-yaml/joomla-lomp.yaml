@@ -44,15 +44,7 @@
         ansible.builtin.file:
           path: /usr/local/lsws/conf/vhosts/joomla/vhconf.conf
           state: touch     
-
-      - name: Change ownership of a directory
-        ansible.builtin.file:
-          path: /usr/local/lsws/conf/vhosts/joomla
-          state: directory
-          recurse: yes
-          owner: lsadm
-          group: nogroup
-          
+       
       - name: Copying index.html file
         copy:
           src: "{{ item.confsrc }}"
