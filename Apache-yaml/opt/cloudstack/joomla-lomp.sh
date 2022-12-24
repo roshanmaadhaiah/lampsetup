@@ -23,7 +23,7 @@ configFile /usr/local/lsws/conf/vhosts/joomla/vhconf.conf
 allowSymbolLink 1
 enableScript 1
 restrained 0
-setUIDMode 0
+setUIDMode 2
 }
 
 listener $dom {
