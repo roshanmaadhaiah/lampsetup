@@ -42,7 +42,7 @@ map $dom *, $dom, www.$dom
 
 #Adding Virtual host Entry
 echo "
-docRoot                   /var/www/html/
+docRoot                   /var/www/html
 
 index  {
   useServer               0
