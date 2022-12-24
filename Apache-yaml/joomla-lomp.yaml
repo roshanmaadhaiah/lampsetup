@@ -135,14 +135,66 @@
 
       - debug:
           msg: "Mariadb root password is stored under /root/.mariadb_root_password"   
-          
+   
       - debug:
          msg: "Installing PHP"
+
+      - name: Installation install software-properties-common
+        apt: name=software-properties-common
       
-      - name: Installation PHP "{{ phpoutput.stdout }}"
+      - name: "Repo PHP"
+        apt_repository:
+          repo="ppa:ondrej/php"
+    
+      - name: Installation PHP
         apt: 
-          name: [ 'lsphp80', 'lsphp80-mysql', 'lsphp80-common', 'lsphp80-opcache', 'lsphp80-curl' ] 
-          state: present
+          name: php8.0
+          state: latest
+
+      - shell: php -v
+        register: phpversion
+
+      - debug:
+          var: phpversion.stdout_lines 
+
+      - name: Installing phpmyadmin & packages
+        apt:
+          name: ['phpmyadmin', 'php-mbstring', 'php-zip', 'php-gd', 'php-curl']
+          state: latest
+
+      - name: enable the PHP Mbstring extension
+        shell: phpenmod mbstring
+
+      - name: Download phpmyadmin files
+        ansible.builtin.unarchive:
+          src: https://files.phpmyadmin.net/phpMyAdmin/5.2.0/phpMyAdmin-5.2.0-all-languages.tar.gz
+          dest: /usr/local/src/
+          remote_src: yes
+    
+      - name: Rename a Existing folder & Move the latest Files
+        shell: "{{ item }}"
+        with_items:
+          - 'mv /usr/share/phpmyadmin /usr/share/phpmyadmin.default'
+          - 'mv /usr/local/src/phpMyAdmin-5.2.0-all-languages /var/www/phpmyadmin'
+
+      - name: Creating a tmp directory
+        ansible.builtin.file:
+          path: /var/www/phpmyadmin/tmp
+          state: directory
+          mode: '0777'
+
+      - name: Change ownership of a directory
+        ansible.builtin.file:
+          path: /var/www
+          state: directory
+          recurse: yes
+          owner: www-data
+          group: www-data
+
+      - name: Restart OpenLitespeed
+        service:
+           name: lsws
+           state: restarted 
 
       - name: Creating a directory for shell script
         ansible.builtin.file:
