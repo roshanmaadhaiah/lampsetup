@@ -196,6 +196,63 @@
            name: lsws
            state: restarted 
 
+      - name: Creates directory for joomla
+        file:
+          path: /usr/local/src/joomla/
+          state: directory
+        
+      - name: Download Joomla files
+        ansible.builtin.unarchive:
+          src: https://downloads.joomla.org/cms/joomla4/4-2-2/Joomla_4.2.2-Stable-Full_Package.tar.gz
+          dest: /usr/local/src/joomla/
+          remote_src: yes
+         
+      - name: Rename a Existing folder & Move the latest Files
+        shell: "{{ item }}"
+        with_items:
+          - 'rsync -zavh /usr/local/src/joomla/. /var/www/html/.'
+       
+      - name: Generating joomla password
+        shell: openssl rand -hex 24
+        register: joomlapassword
+
+      - debug:
+         var: joomlapassword.stdout
+
+      - name: Storing joomla password
+        copy:
+          dest: "/root/.joomla_database_details"
+          content: |
+            joomla_database_name = joomla_db          
+            joomla_database_user = joomla_user
+            joomla_user_password="{{ joomlapassword.stdout }}"
+          
+      - name: Creating joomla configurations
+        shell: "{{ item }}"
+        with_items:
+          - mysql -e 'create database joomla_db' -u root -p{{ rootpassword.stdout }}
+          - mysql -e "CREATE USER 'joomla_user'@'localhost' IDENTIFIED WITH mysql_native_password BY '{{ joomlapassword.stdout }}';" -u root -p{{ rootpassword.stdout }}
+          - mysql -e "GRANT ALL PRIVILEGES ON joomla_db.* TO 'joomla_user'@'localhost';" -u root -p{{ rootpassword.stdout }}
+          
+      - name: Change ownership of a directory
+        ansible.builtin.file:
+          path: /var/www/html/
+          state: directory
+          recurse: yes
+          owner: www-data
+          group: www-data
+          
+      - name: Installing php extensions
+        apt:
+          name: php-mysql
+          state: present
+
+      - name: Tweaking php settings
+        shell: 'sed -e "s|upload_max_filesize.*|upload_max_filesize = 64M|g" \
+                    -e "s|post_max_size.*|post_max_size = 64M|g" \
+                    -e "s|max_execution_time.*|max_execution_time = 60|g" \
+                    -i /etc/php/8.0/apache2/php.ini'
+
       - name: Creating a directory for shell script
         ansible.builtin.file:
           path: /opt/cloudstack
