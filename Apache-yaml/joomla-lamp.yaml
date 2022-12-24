@@ -125,7 +125,9 @@
           repo="ppa:ondrej/php"
     
       - name: Installation PHP
-        apt: name=php state=present
+        apt: 
+          name: php8.0
+          state: latest
 
       - shell: php -v
         register: phpversion
