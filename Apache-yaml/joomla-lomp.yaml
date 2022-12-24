@@ -59,7 +59,18 @@
           dest: "{{ item.confdest }}"
         with_items: 
           - { confsrc: '/usr/local/src/Apache-yaml/var/www/html/index.html', confdest: '/var/www/html/'}  
-          
+
+      - name: Configuring OpenLitespeed
+        shell: "{{ item }}"
+        with_items:
+           - sed -i 's/nobody/www-data/g' /usr/local/lsws/conf/httpd_config.conf
+           - sed -i 's/nogroup/www-data/g' /usr/local/lsws/conf/httpd_config.conf
+
+      - name: Restarting OpenLitespeed
+        service:
+           name: lsws
+           state: restarted 
+           
       - name: Installing Mariadb
         apt:
           name: ['mariadb-server', 'mariadb-client']
