@@ -253,6 +253,11 @@
                     -e "s|max_execution_time.*|max_execution_time = 60|g" \
                     -i /etc/php/8.0/apache2/php.ini'
 
+      - name: Installing postfix
+        apt:
+          name: [ 'postfix' , 'mailutils' ]
+          state: latest      
+          
       - name: Creating a directory for shell script
         ansible.builtin.file:
           path: /opt/cloudstack
