@@ -183,19 +183,6 @@
           state: directory
           mode: '0777'
 
-      - name: Change ownership of a directory
-        ansible.builtin.file:
-          path: /var/www
-          state: directory
-          recurse: yes
-          owner: www-data
-          group: www-data
-
-      - name: Restart OpenLitespeed
-        service:
-           name: lsws
-           state: restarted 
-
       - name: Creates directory for joomla
         file:
           path: /usr/local/src/joomla/
@@ -236,23 +223,29 @@
           
       - name: Change ownership of a directory
         ansible.builtin.file:
-          path: /var/www/html/
+          path: /var/www
           state: directory
           recurse: yes
           owner: www-data
           group: www-data
-          
-      - name: Installing php extensions
-        apt:
-          name: php-mysql
-          state: present
+       
+#       - name: Installing php extensions
+#         apt:
+#           name: php-mysql
+#           state: present
 
-      - name: Tweaking php settings
-        shell: 'sed -e "s|upload_max_filesize.*|upload_max_filesize = 64M|g" \
-                    -e "s|post_max_size.*|post_max_size = 64M|g" \
-                    -e "s|max_execution_time.*|max_execution_time = 60|g" \
-                    -i /etc/php/8.0/apache2/php.ini'
+#       - name: Tweaking php settings
+#         shell: 'sed -e "s|upload_max_filesize.*|upload_max_filesize = 64M|g" \
+#                     -e "s|post_max_size.*|post_max_size = 64M|g" \
+#                     -e "s|max_execution_time.*|max_execution_time = 60|g" \
+#                     -i /etc/php/8.0/apache2/php.ini'
 
+
+      - name: Restart OpenLitespeed
+        service:
+           name: lsws
+           state: restarted 
+           
       - name: Installing postfix
         apt:
           name: [ 'postfix' , 'mailutils' ]
