@@ -51,8 +51,6 @@ certFile /usr/local/lsws/conf/example.crt
 map $dom *, $dom, www.$dom
 }" | tee -a /usr/local/lsws/conf/httpd_config.conf >/dev/null
 
-sed -i 's/map                      Example \*/map $dom *, $dom, www.$dom/g' /usr/local/lsws/conf/httpd_config.conf
-
 #Adding Virtual host Entry
 echo "
 docRoot                   /var/www/html
