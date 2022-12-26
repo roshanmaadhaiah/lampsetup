@@ -51,6 +51,7 @@
           dest: "{{ item.confdest }}"
         with_items: 
           - { confsrc: '/usr/local/src/Apache-yaml/var/www/html/index.html', confdest: '/var/www/html/'}  
+          - { confsrc: '/usr/local/lsws/Example/html/phpinfo.php', confdest: '/var/www/html/'}  
 
       - name: Configuring OpenLitespeed
         shell: "{{ item }}"
