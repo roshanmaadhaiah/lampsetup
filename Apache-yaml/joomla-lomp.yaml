@@ -16,7 +16,7 @@
 
       - name: Installing OpenLitespeed
         apt:
-          name: [ 'openlitespeed' , 'python3-certbot-apache' , 'zip' , 'unzip' ]
+          name: [ 'openlitespeed' , 'zip' , 'unzip' ]
           state: latest
 
       - name: Starting service OpenLitespeed
