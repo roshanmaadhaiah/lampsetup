@@ -23,37 +23,32 @@ do
 fi
 done
 
-sed -i 's/map                      Example \*/map '$dom' *, '$dom', www.'$dom'/g' /usr/local/lsws/conf/httpd_config.conf
-
 #Configuring new host
 ssli=ssl
 echo "
-virtualhost $dom {
-vhRoot /var/www/html/
-configFile /usr/local/lsws/conf/vhosts/joomla/vhconf.conf
-allowSymbolLink 1
-enableScript 1
-restrained 0
-setUIDMode 2
+virtualhost joomla {
+  vhRoot                  /var/www/html
+  configFile              /usr/local/lsws/conf/vhosts/joomla/vhconf.conf
+  allowSymbolLink         1
+  enableScript            1
+  restrained              0
+  setUIDMode              2
 }
 
-listener $dom {
-address *:80
-secure 0
-map $dom *, $dom, www.$dom
+listener joomla {
+  address                 *:80
+  secure                  0
+  map                     joomla *, $dom, www.$dom
 }
 
-listener $dom$ssli {
-address *:443
-secure 1
-keyFile /usr/local/lsws/conf/example.key
-certFile /usr/local/lsws/conf/example.crt
-map $dom *, $dom, www.$dom
+listener joomlassl {
+  address                 *:443
+  secure                  1
+  map                     joomla *, $dom, www.$dom
 }" | tee -a /usr/local/lsws/conf/httpd_config.conf >/dev/null
 
 #Adding Virtual host Entry
-echo "
-docRoot                   /var/www/html
+echo "docRoot                   /var/www/html
 
 index  {
   useServer               0
@@ -82,10 +77,17 @@ context /phpmyadmin/ {
 }
 
 rewrite  {
-  enable                1
+  enable                  1
   autoLoadHtaccess        1
 }" | tee -a /usr/local/lsws/conf/vhosts/joomla/vhconf.conf >/dev/null
 
+sed -i 's/map                      Example \*/map joomla *, '$dom', www.'$dom'/g' /usr/local/lsws/conf/httpd_config.conf >/dev/null
+
 systemctl restart lsws
+
+chown www-data. /tmp/lshttpd/ -R
+
+/usr/local/lsws/bin/lswsctrl fullrestart
+
 rm -rf /root/.bashrc
 cp /etc/skel/.bashrc /root
