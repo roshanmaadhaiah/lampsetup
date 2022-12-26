@@ -136,26 +136,26 @@
       - debug:
           msg: "Mariadb root password is stored under /root/.mariadb_root_password"   
    
-      - debug:
-         msg: "Installing PHP"
+#       - debug:
+#          msg: "Installing PHP"
 
-      - name: Installation install software-properties-common
-        apt: name=software-properties-common
+#       - name: Installation install software-properties-common
+#         apt: name=software-properties-common
       
-      - name: "Repo PHP"
-        apt_repository:
-          repo="ppa:ondrej/php"
+#       - name: "Repo PHP"
+#         apt_repository:
+#           repo="ppa:ondrej/php"
     
-      - name: Installation PHP
-        apt: 
-          name: php8.0
-          state: latest
+#       - name: Installation PHP
+#         apt: 
+#           name: php8.0
+#           state: latest
 
-      - shell: php -v
-        register: phpversion
+#       - shell: php -v
+#         register: phpversion
 
-      - debug:
-          var: phpversion.stdout_lines 
+#       - debug:
+#           var: phpversion.stdout_lines 
 
       - name: Download phpmyadmin files
         ansible.builtin.unarchive:
