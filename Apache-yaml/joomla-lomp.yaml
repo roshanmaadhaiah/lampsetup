@@ -135,7 +135,17 @@
 
       - debug:
           msg: "Mariadb root password is stored under /root/.mariadb_root_password"   
-   
+ 
+      - name: Installing PHP
+        apt:
+          name: [ 'lsphp80' , 'lsphp80-mysql' , 'lsphp80-common' , 'lsphp80-curl' , 'lsphp80-opcache' ]
+          state: latest
+      
+      - name: Configuring OpenLitespeed
+        shell: "{{ item }}"
+        with_items:
+           - sed -i 's/lsphp74/lsphp80/g' /usr/local/lsws/conf/httpd_config.conf
+      
       - name: Download phpmyadmin files
         ansible.builtin.unarchive:
           src: https://files.phpmyadmin.net/phpMyAdmin/5.2.0/phpMyAdmin-5.2.0-all-languages.tar.gz
