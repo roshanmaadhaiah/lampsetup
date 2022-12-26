@@ -199,18 +199,6 @@
           owner: www-data
           group: www-data
        
-#       - name: Installing php extensions
-#         apt:
-#           name: php-mysql
-#           state: present
-
-#       - name: Tweaking php settings
-#         shell: 'sed -e "s|upload_max_filesize.*|upload_max_filesize = 64M|g" \
-#                     -e "s|post_max_size.*|post_max_size = 64M|g" \
-#                     -e "s|max_execution_time.*|max_execution_time = 60|g" \
-#                     -i /etc/php/8.0/apache2/php.ini'
-
-
       - name: Restart OpenLitespeed
         service:
            name: lsws
