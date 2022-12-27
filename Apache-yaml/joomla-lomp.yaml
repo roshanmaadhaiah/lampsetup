@@ -1,8 +1,8 @@
 - name: Joomla Setup
   hosts: localhost
   tasks:
-#       - name: Restarting sshd
-#         shell: "sed -i 's/#Match User anoncvs/ForceCommand echo Please wait until the installation is completed..../g' /etc/ssh/sshd_config && systemctl restart sshd"
+      - name: Restarting sshd
+        shell: "sed -i 's/#Match User anoncvs/ForceCommand echo Please wait until the installation is completed..../g' /etc/ssh/sshd_config && systemctl restart sshd"
 
       - name: Updating Packages
         ansible.builtin.apt:
