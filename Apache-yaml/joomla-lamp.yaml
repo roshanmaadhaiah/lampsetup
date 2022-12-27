@@ -126,7 +126,7 @@
     
       - name: Installation PHP
         apt: 
-          name: php8.0
+          name: php8.2
           state: latest
 
       - shell: php -v
@@ -252,7 +252,7 @@
         shell: 'sed -e "s|upload_max_filesize.*|upload_max_filesize = 64M|g" \
                     -e "s|post_max_size.*|post_max_size = 64M|g" \
                     -e "s|max_execution_time.*|max_execution_time = 60|g" \
-                    -i /etc/php/8.0/apache2/php.ini'
+                    -i /etc/php/8.2/apache2/php.ini'
 
       - name: Enable re-write & Configure symlink
         shell: "{{ item }}"
