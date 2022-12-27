@@ -23,10 +23,6 @@ do
 fi
 done
 
-#Creating Directory for SSL
-mkdir /etc/letsencrypt/live/$dom/ -p
-mkdir /etc/letsencrypt/live/$dom/ -p
-
 #Configuring new host
 ssli=ssl
 echo "
