@@ -23,6 +23,10 @@ do
 fi
 done
 
+#Creating Directory for SSL
+mkdir /etc/letsencrypt/live/$dom/ -p
+mkdir /etc/letsencrypt/live/$dom/ -p
+
 #Configuring new host
 ssli=ssl
 echo "
@@ -44,6 +48,8 @@ listener joomla {
 listener joomlassl {
   address                 *:443
   secure                  1
+  keyFile /etc/letsencrypt/live/$dom/privkey.pem
+  certFile /etc/letsencrypt/live/$dom/cert.pem
   map                     joomla *, $dom, www.$dom
 }" | tee -a /usr/local/lsws/conf/httpd_config.conf >/dev/null
 
