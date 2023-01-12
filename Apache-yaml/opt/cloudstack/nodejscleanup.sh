@@ -4,6 +4,9 @@ RED='\033[0;31m'
 NC='\033[0m'
 
 echo
+echo -e "${RED}NodeJS home directory /var/www/html/${NC}"
+echo
+echo
 echo -e "${RED}NodeJS Credentials are stored under /root/${NC}"
 echo
 echo -e "${RED}NodeJS shell_user_passwords${NC}"
