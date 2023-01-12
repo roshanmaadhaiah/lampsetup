@@ -6,6 +6,8 @@ NC='\033[0m'
 echo
 echo -e "${RED}NodeJS home directory /var/www/html/${NC}"
 echo
+echo -e "${RED}NodeJS PM2 files are stored under /home/nodejs/${NC}"
+echo
 echo
 echo -e "${RED}NodeJS Credentials are stored under /root/${NC}"
 echo
