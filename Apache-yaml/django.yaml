@@ -3,7 +3,7 @@
   tasks:
       - name: Restarting sshd
         shell: "sed -i 's/#Match User anoncvs/ForceCommand echo Please wait until the installation is completed..../g' /etc/ssh/sshd_config && systemctl restart sshd"
-
+       
       - name: Updating Packages
         ansible.builtin.apt:
           update_cache: yes
@@ -55,19 +55,19 @@
           - sudo -u postgres psql -c "create user django with password '{{ postgresqlpassword.stdout }}';"
           - sudo -u postgres psql -c 'grant all privileges on database django TO django;'
 
-      - name: Generating user password
+      - name: Generating shell user password
         shell: openssl rand -hex 24
         register: userpassword
 
       - debug:
          var: userpassword.stdout
 
-      - name: Storing user password
+      - name: Storing shell user password
         copy:
-          dest: "/root/.user_passwords"
+          dest: "/root/.shell_user_passwords"
           content: |
-            DJANGO_LOGIN_USER = django
-            DJANGO_LOGIN_USER_PASSWORD = "{{ userpassword.stdout }}"
+            DJANGO_SHELL_LOGIN_USER = django
+            DJANGO_SHELL_LOGIN_USER_PASSWORD = "{{ userpassword.stdout }}"
 
       - name: Creating a user for Django project
         ansible.builtin.user:
@@ -185,6 +185,12 @@
           owner: django
           group: root
 
+      - name: Creating a directory for static files
+        ansible.builtin.file:
+          path: /home/django/django_project/django_project/static/
+          state: directory
+          mode: '0755'
+
       - name: Replace password
         ansible.builtin.lineinfile:
           state: present
@@ -199,6 +205,29 @@
           regexp: "SECRET_KEY1"
           line: "SECRET_KEY = '{{ secretkey.stdout }}'"
 
+      - name: Completing Initial Project Setup
+        shell: "{{ item }}"
+        with_items:
+          - python3 /home/django/django_project/manage.py makemigrations
+          - python3 /home/django/django_project/manage.py migrate
+
+      - name: Generating adminpanel password
+        shell: openssl rand -hex 24
+        register: adminpanelpassword
+
+      - debug:
+         var: adminpanelpassword.stdout
+
+      - name: Storing adminpanel password
+        copy:
+          dest: "/root/.adminpanel_passwords"
+          content: |
+            DJANGO_ADMIN_LOGIN_USER = django
+            DJANGO_ADMIN_LOGIN_USER_PASSWORD = "{{ adminpanelpassword.stdout }}"
+
+      - name: Setting up admin user
+        shell: echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('django', 'temp@example.com', '{{ adminpanelpassword.stdout }}')" | python3 "/home/django/django_project/manage.py" shell
+
       - name: Reload gunicorn.service
         ansible.builtin.systemd:
           state: restarted
@@ -211,3 +240,34 @@
 
       - debug:
           var: status.stdout 
+
+      - name: restarting service nginx
+        service:
+          name: nginx
+          state: restarted 
+          
+      - name: Installing postfix
+        apt:
+          name: [ 'postfix' , 'mailutils' ]
+          state: latest      
+          
+      - name: Creating a directory for shell script
+        ansible.builtin.file:
+          path: /opt/cloudstack
+          state: directory         
+          
+      - name: Copy files for shell script
+        copy:
+          src: "{{ item.confsrc }}"
+          dest: "{{ item.confdest }}"
+        with_items: 
+          - { confsrc: '/usr/local/src/Apache-yaml/opt/cloudstack/cleanup.sh', confdest: '/opt/cloudstack/'}     
+
+      - name: Adding a line for shell script
+        lineinfile:
+          path: /root/.bashrc
+          line: "chmod +x /opt/cloudstack/cleanup.sh && /opt/cloudstack/cleanup.sh"
+          state: present  
+
+      - name: Restarting sshd
+        shell: "sed -i 's/ForceCommand echo Please wait until the installation is completed..../#Match User anoncvs/g' /etc/ssh/sshd_config && systemctl restart sshd" 
