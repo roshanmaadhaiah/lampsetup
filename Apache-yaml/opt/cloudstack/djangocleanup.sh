@@ -4,6 +4,9 @@ RED='\033[0;31m'
 NC='\033[0m'
 
 echo
+echo -e "${RED}Django home directory "/home/django/django_project/django_project/"${NC}"
+echo
+echo
 echo -e "${RED}Django Credentials are stored under /root/${NC}"
 echo
 echo -e "${RED}Django postgresql_passwords${NC}"
