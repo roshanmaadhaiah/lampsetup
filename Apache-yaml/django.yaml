@@ -136,7 +136,7 @@
           src: "{{ item.confsrc }}"
           dest: "{{ item.confdest }}"
         with_items: 
-          - { confsrc: '/usr/local/src/Apache-yaml/etc/nginx/sites-available/default', confdest: '/etc/nginx/sites-available/'}
+          - { confsrc: '/usr/local/src/Apache-yaml/etc/nginx/sites-available/django/default', confdest: '/etc/nginx/sites-available/'}
           - { confsrc: '/usr/local/src/Apache-yaml/var/www/html/index.html', confdest: '/var/www/html/'}
 
       - name: Creating a symlink
