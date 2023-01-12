@@ -1,4 +1,4 @@
-- name: Joomla Setup
+- name: Django Setup
   hosts: localhost
   tasks:
       - name: Restarting sshd
