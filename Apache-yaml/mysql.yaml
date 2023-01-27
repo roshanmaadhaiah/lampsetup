@@ -136,7 +136,7 @@
       - name: Installing phpmyadmin & packages
         apt:
           name: phpmyadmin
-          state: latest
+          state: present
 
       - name: enable the PHP Mbstring extension
         shell: phpenmod mbstring
