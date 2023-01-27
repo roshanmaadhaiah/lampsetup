@@ -135,7 +135,7 @@
 
       - name: Installing phpmyadmin & packages
         apt:
-          name: [ 'php8.1-mbstring', 'php8.1-zip', 'php8.1-gd', 'php8.1-curl']
+          name: ['phpmyadmin', 'php-mbstring', 'php-zip', 'php-gd', 'php-json', 'php-curl']
           state: latest
 
       - name: enable the PHP Mbstring extension
@@ -150,7 +150,7 @@
       - name: Rename a Existing folder & Move the latest Files
         shell: "{{ item }}"
         with_items:
-#           - 'mv /usr/share/phpmyadmin /usr/share/phpmyadmin.default'
+          - 'mv /usr/share/phpmyadmin /usr/share/phpmyadmin.default'
           - 'mv /usr/local/src/phpMyAdmin-5.2.0-all-languages /usr/share/phpmyadmin'
 
       - name: Creating a tmp directory
