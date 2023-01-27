@@ -134,9 +134,7 @@
           var: phpversion.stdout_lines 
 
       - name: Installing phpmyadmin & packages
-        apt:
-          name: phpmyadmin
-          state: present
+        shell: apt install phpmyadmin
 
       - name: enable the PHP Mbstring extension
         shell: phpenmod mbstring
