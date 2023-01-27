@@ -189,12 +189,12 @@
            phpmyadmin_pass="{{ phpmyadminpassword.stdout }}"
       - name: Configuring prompt
         shell: htpasswd -cb /etc/phpmyadmin/.htpasswd admin "{{ phpmyadminpassword.stdout }}"
-	
+
       - name: Installing php extensions
         apt:
           name: php8.1-mysql
           state: present
-	  
+
       - name: Restart apache
         service:
            name: apache2
