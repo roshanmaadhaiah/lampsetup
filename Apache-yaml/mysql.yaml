@@ -134,7 +134,9 @@
           var: phpversion.stdout_lines 
 
       - name: Installing phpmyadmin & packages
-        shell: apt install phpmyadmin
+        apt:
+          name: [ 'php8.1-mbstring', 'php8.1-zip', 'php8.1-gd', 'php8.1-curl']
+          state: latest
 
       - name: enable the PHP Mbstring extension
         shell: phpenmod mbstring
