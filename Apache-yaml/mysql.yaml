@@ -141,17 +141,17 @@
       - name: enable the PHP Mbstring extension
         shell: phpenmod mbstring
 
-      - name: Download phpmyadmin files
-        ansible.builtin.unarchive:
-          src: https://files.phpmyadmin.net/phpMyAdmin/5.2.0/phpMyAdmin-5.2.0-all-languages.tar.gz
-          dest: /usr/local/src/
-          remote_src: yes
+#       - name: Download phpmyadmin files
+#         ansible.builtin.unarchive:
+#           src: https://files.phpmyadmin.net/phpMyAdmin/5.2.0/phpMyAdmin-5.2.0-all-languages.tar.gz
+#           dest: /usr/local/src/
+#           remote_src: yes
     
-      - name: Rename a Existing folder & Move the latest Files
-        shell: "{{ item }}"
-        with_items:
-          - 'mv /usr/share/phpmyadmin /usr/share/phpmyadmin.default'
-          - 'mv /usr/local/src/phpMyAdmin-5.2.0-all-languages /usr/share/phpmyadmin'
+#       - name: Rename a Existing folder & Move the latest Files
+#         shell: "{{ item }}"
+#         with_items:
+#           - 'mv /usr/share/phpmyadmin /usr/share/phpmyadmin.default'
+#           - 'mv /usr/local/src/phpMyAdmin-5.2.0-all-languages /usr/share/phpmyadmin'
 
       - name: Creating a tmp directory
         ansible.builtin.file:
