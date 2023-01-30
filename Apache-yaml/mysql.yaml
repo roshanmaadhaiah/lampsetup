@@ -167,6 +167,19 @@
           - { confsrc: '/usr/local/src/Apache-yaml/etc/apache2/conf-enabled/phpmyadmin.conf', confdest: '/etc/apache2/conf-enabled/'}
           - { confsrc: '/usr/local/src/Apache-yaml/usr/share/phpmyadmin/.htaccess', confdest: '/usr/share/phpmyadmin/'}
 
+      - name: Generating blowfish password
+        shell: openssl rand -base64 22
+        register: blowfish
+
+      - debug:
+         var: blowfish.stdout
+
+      - name: Download phpmyadmin files
+        shell: '{{ item }}'
+        with_items:
+             - cat /usr/share/phpmyadmin/config.sample.inc.php | grep -v blowfish > /usr/share/phpmyadmin/config.inc.php
+             - echo "\$cfg['blowfish_secret'] = '{{ blowfish.stdout }}' ;" >> /usr/share/phpmyadmin/config.inc.php
+             
       - name: Change ownership of a directory
         ansible.builtin.file:
           path: /usr/share/phpmyadmin
