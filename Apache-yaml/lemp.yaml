@@ -82,7 +82,8 @@
         copy:
           dest: "/root/.mysql_root_password"
           content: |
-            root_mysql_pass="{{ rootpassword.stdout }}"
+            root_mysql_pass = "{{ rootpassword.stdout }}"
+            
       - name: Remove anonymous users
         command: 'mysql -ne "{{ item }}"'
         with_items:
