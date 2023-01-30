@@ -17,7 +17,6 @@ rm -rf /var/lib/cloud/data/*
 find /var/log -mtime -1 -type f -exec truncate -s 0 {} \;
 rm -rf /var/log/*.gz /var/log/*.[0-9] /var/log/*-????????
 cat /dev/null > /var/log/lastlog; cat /dev/null > /var/log/wtmp
-> /root/.ssh/authorized_keys
 apt-get -y autoremove >/dev/null 2>&1
 apt-get -y autoclean >/dev/null 2>&1
 history -c
