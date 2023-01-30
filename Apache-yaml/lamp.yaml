@@ -154,7 +154,7 @@
       - name: Adding a line for shell script
         lineinfile:
           path: /root/.bashrc
-          line: "chmod +x /opt/cloudstack/cleanup.sh && /opt/cloudstack/lamp_cleanup.sh"
+          line: "chmod +x /opt/cloudstack/lamp_cleanup.sh && /opt/cloudstack/lamp_cleanup.sh"
           state: present  
 
       - name: Restarting sshd
