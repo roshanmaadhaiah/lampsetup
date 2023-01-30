@@ -156,12 +156,12 @@
           src: "{{ item.confsrc }}"
           dest: "{{ item.confdest }}"
         with_items: 
-          - { confsrc: '/usr/local/src/Apache-yaml/opt/cloudstack/cleanup.sh', confdest: '/opt/cloudstack/'}     
+          - { confsrc: '/usr/local/src/Apache-yaml/opt/cloudstack/lamp_cleanup.sh', confdest: '/opt/cloudstack/'}     
 
       - name: Adding a line for shell script
         lineinfile:
           path: /root/.bashrc
-          line: "chmod +x /opt/cloudstack/cleanup.sh && /opt/cloudstack/cleanup.sh"
+          line: "chmod +x /opt/cloudstack/lamp_cleanup.sh && /opt/cloudstack/lamp_cleanup.sh"
           state: present    
       
       - name: Restarting sshd
