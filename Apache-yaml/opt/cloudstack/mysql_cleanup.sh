@@ -13,6 +13,7 @@ ${NC}"
 echo
 echo -e "${RED}This message will be removed in the next login!${NC}"
 echo
+echo
 echo -e "${RED}Use the Below Password for logging into MySQL${NC}"
 echo
 cat /root/.mysql_root_password
