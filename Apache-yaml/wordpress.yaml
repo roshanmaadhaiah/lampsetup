@@ -79,7 +79,7 @@
         copy:
           dest: "/root/.mysql_root_password"
           content: |
-            root_mysql_pass="{{ rootpassword.stdout }}"
+            root_mysql_pass = "{{ rootpassword.stdout }}"
             
       - name: Remove anonymous users
         command: 'mysql -ne "{{ item }}"'
@@ -140,7 +140,7 @@
 
       - name: Installing phpmyadmin & packages
         apt:
-          name: ['phpmyadmin', 'php-mbstring', 'php-zip', 'php-gd', 'php-json', 'php-curl']
+          name: ['phpmyadmin', 'php8.1-mbstring', 'php8.1-zip', 'php8.1-gd', 'php-json', 'php8.1-curl']
           state: latest
 
       - name: enable the PHP Mbstring extension
@@ -172,6 +172,19 @@
           - { confsrc: '/usr/local/src/Apache-yaml/etc/apache2/conf-enabled/phpmyadmin.conf', confdest: '/etc/apache2/conf-enabled/'}
           - { confsrc: '/usr/local/src/Apache-yaml/usr/share/phpmyadmin/.htaccess', confdest: '/usr/share/phpmyadmin/'}
 
+      - name: Generating blowfish password
+        shell: openssl rand -base64 22
+        register: blowfish
+
+      - debug:
+         var: blowfish.stdout
+
+      - name: Download phpmyadmin files
+        shell: '{{ item }}'
+        with_items:
+             - cat /usr/share/phpmyadmin/config.sample.inc.php | grep -v blowfish > /usr/share/phpmyadmin/config.inc.php
+             - echo "\$cfg['blowfish_secret'] = '{{ blowfish.stdout }}' ;" >> /usr/share/phpmyadmin/config.inc.php
+             
       - name: Change ownership of a directory
         ansible.builtin.file:
           path: /usr/share/phpmyadmin
@@ -191,7 +204,8 @@
         copy:
          dest: "/root/.phpmyadmin_password"
          content: |
-           phpmyadmin_pass="{{ phpmyadminpassword.stdout }}"
+           phpmyadmin_pass = "{{ phpmyadminpassword.stdout }}"
+           
       - name: Configuring prompt
         shell: htpasswd -cb /etc/phpmyadmin/.htpasswd admin "{{ phpmyadminpassword.stdout }}"
 
