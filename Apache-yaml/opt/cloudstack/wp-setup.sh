@@ -55,7 +55,9 @@ unset HISTFILE
 a=0
 while [ $a -eq 0 ]
 do
- echo -e "${RED}Enter the Domain/Subdomain name to setup wordpress:${NC}"
+ echo -e "${RED}To cancel setup, press Ctrl+C.  This script will run again on your next login:${NC}"
+ echo -e "${RED}Enter the domain name for your new WordPress site:${NC}"
+ echo -e "${RED}(ex. example.org or test.example.org) do not include www or http/s:${NC}"
  read -p "Domain/Subdomain name: " dom
  if [ -z "$dom" ]
  then
