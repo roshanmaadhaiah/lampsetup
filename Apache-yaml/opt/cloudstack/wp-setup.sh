@@ -55,7 +55,8 @@ unset HISTFILE
 a=0
 while [ $a -eq 0 ]
 do
- read -p "${RED}Domain/Subdomain name:${NC} " dom
+ echo -e "${RED}Enter the Domain/Subdomain name to setup wordpress:${NC}"
+ read -p "Domain/Subdomain name: " dom
  if [ -z "$dom" ]
  then
   a=0
