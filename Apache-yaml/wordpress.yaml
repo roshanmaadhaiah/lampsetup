@@ -204,6 +204,7 @@
         copy:
          dest: "/root/.phpmyadmin_password"
          content: |
+           phpmyadmin_user = admin
            phpmyadmin_pass = "{{ phpmyadminpassword.stdout }}"
            
       - name: Configuring prompt
