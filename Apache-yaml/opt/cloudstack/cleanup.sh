@@ -1,5 +1,10 @@
 #!/bin/bash
 
+RED='\033[1;31m'
+NC='\033[0m'
+
+echo
+echo -e "${RED}Passwords are stored under /root/${NC}"
 
 #Cleanup script
 rm -rf /usr/local/src/
