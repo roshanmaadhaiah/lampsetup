@@ -3,8 +3,14 @@
 RED='\033[1;31m'
 NC='\033[0m'
 
+echo -e "${RED}
+################################################################################################################
+#                              Your MarketPlace App has been deployed successfully!                            #
+################################################################################################################
+${NC}"
+
 echo
-echo -e "${RED}Passwords are stored under /root/${NC}"
+echo -e "${RED}This message will be removed in the next login!${NC}"
 
 #Cleanup script
 rm -rf /usr/local/src/
