@@ -24,7 +24,7 @@ echo -e "${RED}Use the Below Password for logging into the Phpmyadmin${NC}"
 echo
 cat /root/.phpmyadmin_password
 echo
-echo -e "${RED}Refer to the below Joomla database login details${NC}"
+echo -e "${RED}Refer to the below Joomla database login details to setup joomla in the web Interface${NC}"
 echo
 cat /root/.joomla_database_details
 echo
