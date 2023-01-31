@@ -245,7 +245,7 @@
           content: |
             wordpress_database_name = wordpress_db          
             wordpress_database_user = wordpress_user
-            wordpress_user_password="{{ wordpresspassword.stdout }}"
+            wordpress_user_password = "{{ wordpresspassword.stdout }}"
           
       - name: Creating Wordpress configurations
         shell: "{{ item }}"
