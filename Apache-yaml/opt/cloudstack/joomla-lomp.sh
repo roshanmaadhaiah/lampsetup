@@ -126,10 +126,6 @@ context /phpmyadmin/ {
 rewrite  {
   enable                  1
   autoLoadHtaccess        1
-#  rules                   <<<END_rules
-#RewriteCond %{SERVER_PORT} ^80$
-#RewriteRule .* https://%{SERVER_NAME}%{REQUEST_URI} [R=301,L]
-#  END_rules
 
 }" | tee -a /usr/local/lsws/conf/vhosts/joomla/vhconf.conf >/dev/null
 
