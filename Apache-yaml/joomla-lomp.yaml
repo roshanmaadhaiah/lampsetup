@@ -174,7 +174,7 @@
       - name: Download phpmyadmin files
         shell: '{{ item }}'
         with_items:
-             - cat /usr/share/phpmyadmin/config.sample.inc.php | grep -v blowfish > /var/www/phpmyadmin/config.inc.php
+             - cat /var/www/phpmyadmin/config.sample.inc.php | grep -v blowfish > /var/www/phpmyadmin/config.inc.php
              - echo "\$cfg['blowfish_secret'] = '{{ blowfish.stdout }}' ;" >> /var/www/phpmyadmin/config.inc.php
              
       - name: Creates directory for joomla
