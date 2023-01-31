@@ -1,5 +1,13 @@
 #!/bin/bash
 
+#Generate Openlitespeed admin Password:
+
+lswsadmin=$(openssl rand -hex 24)
+echo "Username: admin
+Password: $lswsadmin" > /root/.Litespeed_Admin_Password
+ENCRYPT_PASS=`/usr/local/lsws/admin/fcgi-bin/admin_php -q /usr/local/lsws/admin/misc/htpasswd.php $lswsadmin`
+echo "admin:$ENCRYPT_PASS" > /usr/local/lsws/admin/conf/htpasswd
+
 RED='\033[1;31m'
 NC='\033[0m'
 
@@ -23,6 +31,10 @@ echo
 echo -e "${RED}Refer to the below Joomla database login details to setup joomla in the web Interface${NC}"
 echo
 cat /root/.joomla_database_details
+echo
+echo -e "${RED}Refer to the below Openlitespeed Admin login details${NC}"
+echo
+cat /root/.Litespeed_Admin_Password
 echo
 
 #Cleanup script
@@ -114,6 +126,11 @@ context /phpmyadmin/ {
 rewrite  {
   enable                  1
   autoLoadHtaccess        1
+  rules                   <<<END_rules
+RewriteCond %{SERVER_PORT} ^80$
+RewriteRule .* https://%{SERVER_NAME}%{REQUEST_URI} [R=301,L]
+  END_rules
+
 }" | tee -a /usr/local/lsws/conf/vhosts/joomla/vhconf.conf >/dev/null
 
 sed -i 's/map                      Example \*/map joomla *, '$dom', www.'$dom'/g' /usr/local/lsws/conf/httpd_config.conf >/dev/null
