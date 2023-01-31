@@ -137,7 +137,7 @@
 
       - name: Installing phpmyadmin & packages
         apt:
-          name: ['phpmyadmin', 'php8.2-mbstring', 'php8.2-zip', 'php8.2-gd', 'php8.2-json', 'php8.2-curl']
+          name: ['phpmyadmin', 'php8.2-mbstring', 'php8.2-zip', 'php8.2-gd', 'php-json', 'php8.2-curl']
           state: latest
 
       - name: enable the PHP Mbstring extension
