@@ -20,7 +20,7 @@ echo -e "${RED}Use the Below Password for logging into MySQL${NC}"
 echo
 cat /root/.mysql_root_password
 echo
-echo -e "${RED}Use the Below Password for logging into the Phpmyadmin${NC}"
+echo -e "${RED}Use the Below Password for logging into Phpmyadmin${NC}"
 echo
 cat /root/.phpmyadmin_password
 echo
