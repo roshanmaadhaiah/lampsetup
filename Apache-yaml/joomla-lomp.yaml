@@ -92,7 +92,7 @@
         copy:
           dest: "/root/.mariadb_root_password"
           content: |
-            root_mariadb_pass="{{ rootpassword.stdout }}"
+            root_mariadb_pass = "{{ rootpassword.stdout }}"
             
       - name: Remove anonymous users
         command: 'mysql -ne "{{ item }}"'
@@ -164,6 +164,19 @@
           state: directory
           mode: '0777'
 
+      - name: Generating blowfish password
+        shell: openssl rand -base64 22
+        register: blowfish
+
+      - debug:
+         var: blowfish.stdout
+
+      - name: Download phpmyadmin files
+        shell: '{{ item }}'
+        with_items:
+             - cat /usr/share/phpmyadmin/config.sample.inc.php | grep -v blowfish > /usr/share/phpmyadmin/config.inc.php
+             - echo "\$cfg['blowfish_secret'] = '{{ blowfish.stdout }}' ;" >> /usr/share/phpmyadmin/config.inc.php
+             
       - name: Creates directory for joomla
         file:
           path: /usr/local/src/joomla/
@@ -193,7 +206,7 @@
           content: |
             joomla_database_name = joomla_db          
             joomla_database_user = joomla_user
-            joomla_user_password="{{ joomlapassword.stdout }}"
+            joomla_user_password = "{{ joomlapassword.stdout }}"
           
       - name: Creating joomla configurations
         shell: "{{ item }}"
