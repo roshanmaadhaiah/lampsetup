@@ -1,8 +1,20 @@
 #!/bin/bash
 
-RED='\033[0;31m'
+RED='\033[1;31m'
 NC='\033[0m'
 
+echo -e "${RED}
+################################################################################################################
+#                              Your MarketPlace App has been deployed successfully!                            #
+#                                 Passwords are stored under /root/                                            #
+#                                 Please spend 2 minutes for configuration                                     #
+#                              Kindly update the below configuration to complete the setup                     #
+################################################################################################################
+${NC}"
+
+echo
+echo -e "${RED}This message will be removed in the next login!${NC}"
+echo
 echo
 echo -e "${RED}Django home directory "/home/django/django_project/django_project/"${NC}"
 echo
