@@ -223,6 +223,14 @@
           owner: www-data
           group: www-data
        
+      - name: Creating DB configurations for phpmyadmin
+        shell: "{{ item }}"
+        with_items:
+          - mysql -u root -p{{ rootpassword.stdout }} < /var/www/phpmyadmin/sql/create_tables.sql
+          - mysql -e "CREATE USER 'pma'@'localhost' IDENTIFIED BY 'pmapass';" -u root -p{{ rootpassword.stdout }}
+          - mysql -e "GRANT ALL PRIVILEGES ON `phpmyadmin`.* TO 'pma'@'localhost' WITH GRANT OPTION;" -u root -p{{ rootpassword.stdout }}
+          - mysql -e "FLUSH PRIVILEGES;" -u root -p{{ rootpassword.stdout }}
+          
       - name: Restart OpenLitespeed
         service:
            name: lsws
