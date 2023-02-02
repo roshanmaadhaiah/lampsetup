@@ -7,8 +7,6 @@ echo -e "${RED}
 ################################################################################################################
 #                              Your MarketPlace App has been deployed successfully!                            #
 #                                 Passwords are stored under /root/                                            #
-#                                 Please spend 2 minutes for configuration                                     #
-#                              Kindly update the below configuration to complete the setup                     #
 ################################################################################################################
 ${NC}"
 
