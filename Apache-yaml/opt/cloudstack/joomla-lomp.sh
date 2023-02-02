@@ -3,8 +3,8 @@
 #Generate Openlitespeed admin Password:
 
 lswsadmin=$(openssl rand -hex 24)
-echo "Username: admin
-Password: $lswsadmin" > /root/.Litespeed_Admin_Password
+echo "Username = admin
+Password = "$lswsadmin"" > /root/.Litespeed_Admin_Password
 ENCRYPT_PASS=`/usr/local/lsws/admin/fcgi-bin/admin_php -q /usr/local/lsws/admin/misc/htpasswd.php $lswsadmin`
 echo "admin:$ENCRYPT_PASS" > /usr/local/lsws/admin/conf/htpasswd
 
