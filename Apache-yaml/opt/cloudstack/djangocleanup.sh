@@ -16,8 +16,6 @@ echo
 echo
 echo -e "${RED}Django home directory "/home/django/django_project/django_project/"${NC}"
 echo
-echo -e "${RED}Django Credentials are stored under /root/${NC}"
-echo
 echo -e "${RED}Django postgresql_passwords${NC}"
 echo
 cat /root/.postgresql_passwords
